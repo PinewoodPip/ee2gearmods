@@ -1,0 +1,58 @@
+(It's best to download this and view it outside a browser)
+---------------------------------------------------------------
+
+This doc summarizes some research I did on LevelGrowStep, DecayChance and attribute scaling.
+
+---------------- LEVELGROWSTEP AND DECAYCHANCE ----------------
+I tested on the 2handed accuracy modifier, whose value range is 11-25 (integer increments), with a LevelGrowStep of 1.3, 0 RarityGrowthStep and the base 55% DecayChance.
+
+I looked at 159 level 5 Staves, Bows and Spears, with the following results:
+0% had +15% accuracy (min level 5.2)
+16% had +14% accuracy (min level 3.9)
+30% had +13% accuracy (min level 2.6)
+26% had +12% accuracy (min level 1.3)
+28% had +11% accuracy (lowest/base value)
+
+I ignored 2handers because they can also roll innate accuracy, which screws data up.
+While this sample size is rather small, I think it's enough to confirm a few things:
+
+- LevelGrowStep starts counting from 0 if the min level if not defined, and from the min level, if it is. 
+	
+	That means that 14% accuracy can only roll at levels >=(1.3 * 3), that is, starting from level 4, since 14% is the third step of the modifier after the base value, and the minimum level for each increment of this mod increases by 1.3. 15% accuracy can only roll starting from level 5.2, meaning starting from level 6.
+
+	For modifiers with a LevelGrowStep of 1 and an undefined min level, this means you can find both the base value and the first step right from level 1. Ex. you can find both +0.3 and +0.35 movement on boots at level 1.
+	
+- DecayChance is indeed the chance of the roll's MAXIMUM value being reduced. This explains I got ~50% less 14% acc items compared to the amount of 13% acc ones.
+	
+	The way modifiers roll seems to be:
+	1. Pick a modifier from the possible ones at this item level and item type (there is a weight system at play here, but I think most mods, if not all, are set to have the same weight)
+	2. Roll the value of the modifier, from the base (min) value, to the highest one possible at this item's level (dictated by LevelGrowStep). All values have the same chance to be picked at this stage.
+	3. Roll for a (DecayChance * 100)% chance to reduce the modifier's maximum value by 1 (starting from the highest one possible at this item level, not the absolute maximum for the modifier). Continue doing this until a roll fails. Almost all modifiers have a DecayChance of 0.55.
+	
+	This means that 55% of items with 14% acc at this level will be downgraded *at least* to 13% acc. Then there is another 55% chance that it will be downgraded to 12%, and so on until a roll fails or the value reaches the base value.
+	
+	Since the DecayChance check always begins from the maximum value, the chance of lower increments of the modifier getting decayed is lower. Ex. If the game rolls 13% acc, there is a 30.25% (0.55^2) chance of it getting downgraded to 12% acc, NOT 55%, since the decay check starts from the highest possible roll.
+	
+	This means that rolling the highest possible value of a modifier is far less likely than rolling any other increment. The second highest value has the best chance of appearing, because although its rolls have a 30.25% of getting decayed, this is "compensated" by the high amount of rolls getting downgraded from highest to second-highest.
+
+---------------- ATTRIBUTES ----------------
+I mapped out how the attribute scaling works for items from level 1 to 21. First of all let's remember that the attribute modifiers have 4 possible values (1-4). As is obvious, these are not absolute values; but instead what the engine calls "qualifiers". Qualifiers are converted to actual values based on the item/character/object level, to facilitate scaling.
+
+A qualifier is always scaled up to the same amount; there is no randomness involved. This means that at level 6 (which is when the second increment of the attribute modifiers becomes available), gear will be able to roll either a 1 or 2 qualifier, meaning you will at most see 2 different actual values for the attribute boosts. Note that it's possible for multiple different qualifier values to scale to the same absolute amount, as is actually the case for level 6.
+
+Here's the table:
+
+Item Level | Possible Qualifiers | Absolute Values (for each qualifier)
+--------------------------------------------------
+    1      |         1           |       +1       
+    6      |       1, 2          |     +1, +1      
+    7      |       1, 2          |     +1, +2       	
+    12     |      1, 2, 3        |   +1, +2, +3      
+    14     |      1, 2, 3        |   +2, +3, +4
+    18     |    1, 2, 3, 4       | +2, +3, +5, +6
+    20     |    1, 2, 3, 4       | +2, +3, +5, +6
+    21     |    1, 2, 3, 4       | +2, +4, +5, +6
+
+As you can see, at level 6, although the second increment of the modifier becomes available, it scales to the same amount of +attribute as the base qualifier. This also happens at level 18; 2 of the modifier increments (the highest one I think; not 100% sure) scale to the same final value.
+
+Since this scaling is dependant on level, attribute modifiers are actually more granular than normal ones, since they can give different absolute values for different levels even if you're not crossing the breakpoints for "unlocking" new modifier increments.
