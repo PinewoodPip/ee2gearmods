@@ -2,7 +2,7 @@
   "name": "ee2gearmods",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://pinewoodpip.github.io/ee2gearmods",
+  "homepage": "http://pinewoodpip.github.io/ee2gearmods/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
