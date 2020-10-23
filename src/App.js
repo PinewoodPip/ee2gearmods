@@ -169,7 +169,10 @@ class App extends React.Component {
     // create headers
     let header = []
     for (let x in columns) {
-      header.push(<TableText text={columns[x].name} width={columns[x].size}  centerText={columns[x].centerText}/>)
+      if (columns[x].name == "LevelGrowStep")
+      header.push(<Tippy content="The level interval between new increments of a modifier becoming available, starting from 0. Ex. for a modifier with LevelGrowStep of 6, new increments of the modifier become available every 6 levels."><span><TableText text={columns[x].name} width={columns[x].size}  centerText={columns[x].centerText}/></span></Tippy>)
+      else
+        header.push(<TableText text={columns[x].name} width={columns[x].size}  centerText={columns[x].centerText}/>)
     }
     rowElements.push(<div className="table-row">{header}</div>)
 
@@ -231,6 +234,8 @@ class App extends React.Component {
             <pre className="info-table">    20     |    1, 2, 3, 4       | +2, +3, +5, +6</pre>
             <pre className="info-table">    21     |    1, 2, 3, 4       | +2, +4, +5, +6</pre>
           </div>
+
+          <span className="info">For more info on how modifiers are rolled, see <a href="https://www.pinewood.team/ee2gearmods/gear.txt">this text doc.</a></span>
 
           <div style={{height: "30px"}}/>
         </header>
