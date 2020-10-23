@@ -58,3 +58,5 @@ Item Level | Possible Qualifiers | Absolute Values (for each qualifier)
 As you can see, at level 6, although the second increment of the modifier becomes available, it scales to the same amount of +attribute as the base qualifier. This also happens at level 18; 2 of the modifier increments (the highest one I think; not 100% sure) scale to the same final value.
 
 Since this scaling is dependant on level, attribute modifiers are actually more granular than normal ones, since they can give different absolute values for different levels even if you're not crossing the breakpoints for "unlocking" new modifier increments.
+
+Empowering an item does not seem to update the real attribute boost, for some reason.
