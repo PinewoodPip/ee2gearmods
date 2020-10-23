@@ -3,9 +3,11 @@ import logo from './logo.svg';
 import './App.css';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
-import { data } from "./data.js"
+import { data } from "./data.js" // generate from a python script which I should prob include at some point
 
 const json = JSON.parse(data)
+
+// more user-friendly names for the modifiers
 const friendlyModNames = {
   Resistance_All: "All Resistances (Implicit)",
   Resistance_Phys: "Physical Resistance (Implicit, Plate)",
@@ -60,6 +62,8 @@ const friendlyModNames = {
   Gloves_Attribute: "Fin, Pwr, Str",
   Boots_Attribute: "Fin, Pwr, Wit"
 }
+
+// tooltips for each type of mod, when extra info is needed
 const modTooltips = {
   Resistance_Phys: "Does not include Piercing resistance.",
   Resistance_Parent: "Of a single type; not all of them in one modifier.",
@@ -108,25 +112,13 @@ for (let x in json) {
   for (let z in cat) {
     let mod = cat[z]
 
-    // include 2/1hand restriction in the mod name (adding a column for this is unnecessary)
+    // include 2/1hand restriction in the mod name (adding a column for this feels unnecessary)
     mod.name = Object.keys(friendlyModNames).includes(mod.mod) ? friendlyModNames[mod.mod] : mod.mod;
     if (mod.handedness != "Any") {
       mod.name += (mod.handedness == "Two-handed only") ? " (2handed mod)" : " (1handed mod)"
     }
   }
 }
-
-// todo
-// DONE merge mods into each weapon
-// DONE SOMEWHAT userfriendly names for mods
-// DONE indicate some implicit properties are subtype-based
-// DONE distinguish innate and non-innate dodge boosts
-
-// hide implicit mods
-
-// DONE fitler out 2handed-only mods for 1handed weapons
-
-// DONE alternating bg color for each row
 
 class TableText extends React.Component {
   constructor() {super()}
@@ -145,7 +137,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      dropdownOption: "Knife",
+      dropdownOption: "Knife", // what option is currently selected in the dropdown
     }
   }
 
@@ -155,12 +147,14 @@ class App extends React.Component {
       options.push(<option value={x}>{x}</option>)
     }
 
+    // get all modifiers that belong to the current section
     let modifiers = []
     for (let x in json[this.state.dropdownOption]) {
       let mod = json[this.state.dropdownOption][x]
       modifiers.push(mod)
     }
 
+    // metadata about each column
     const columns = [
       {name: "Mod", size: "300px", value: "mod", centerText: false,},
       {name: "Min Value", size: "120px", value: "minValue", centerText: true,},
@@ -172,14 +166,14 @@ class App extends React.Component {
 
     let rowElements = []
 
-    // headers
+    // create headers
     let header = []
     for (let x in columns) {
       header.push(<TableText text={columns[x].name} width={columns[x].size}  centerText={columns[x].centerText}/>)
     }
     rowElements.push(<div className="table-row">{header}</div>)
 
-    // entry rows
+    // create entry rows
     let rowNumber = 1;
     for (let x in modifiers) {
       let mod = modifiers[x]

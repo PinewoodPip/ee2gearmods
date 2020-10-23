@@ -35,6 +35,8 @@ While this sample size is rather small, I think it's enough to confirm a few thi
 	
 	This means that rolling the highest possible value of a modifier is far less likely than rolling any other increment. The second highest value has the best chance of appearing, because although its rolls have a 30.25% of getting decayed, this is "compensated" by the high amount of rolls getting downgraded from highest to second-highest.
 
+- I still have no idea what RarityGrowthStep does, if anything at all.
+
 ---------------- ATTRIBUTES ----------------
 I mapped out how the attribute scaling works for items from level 1 to 21. First of all let's remember that the attribute modifiers have 4 possible values (1-4). As is obvious, these are not absolute values; but instead what the engine calls "qualifiers". Qualifiers are converted to actual values based on the item/character/object level, to facilitate scaling.
 
