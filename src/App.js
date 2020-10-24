@@ -32,11 +32,11 @@ const friendlyModNames = {
   Range: "Weapon Range",
   Incarnate_Infus: "Incarnate spawns with memorized infusions",
   SkillAbility_Parent: "Any Skill Ability",
-  Melee_SkillAbility_Parent: "Any Skill Ability",
-  Bow_SkillAbility_Parent: "Any Skill Ability",
+  Melee_SkillAbility_Parent: "Skill Abilities*",
+  Bow_SkillAbility_Parent: "Skill Abilities*",
   Wand_SkillAbility_Parent: "Skill Abilities*",
   Staff_SkillAbility_Parent: "Skill Abilities*",
-  Shield_SkillAbility_Parent: "Any Skill Ability",
+  Shield_SkillAbility_Parent: "Skill Abilities*",
   Belt_CombatAbility_Parent: "One-handed, Two-handed, Ranged, Dual-wielding, Perseverance",
   Gloves_CombatAbility_Parent: "One-handed, Two-handed, Ranged, Dual-wielding",
   Shield_CombatAbility_Parent: "One-handed, Two-handed, Ranged, Dual-wielding, Persevereance",
@@ -71,6 +71,9 @@ const modTooltips = {
   ReactCharge_Parent: "Can be: Celestial, Centurion, Elementalist, Occultist or Predator. Cannot be Masterworked.",
   Damage_Parent: "Of a single type; not all of them in one modifier.",
   SourceGen: "Appears at level 6+. Cannot be Masterworked.",
+  Vitality: "Adds base vitality, meaning it scales with vitality bonuses. Is controlled by a qualifier(?) similar to how attributes work.",
+  LifeSteal: "Cannot be Masterworked.",
+  MovementSpeed: "In centimeters.",
   InfusEffect_Parent: <div className="tooltip">
     <p>Gives +1 to a certain spells's Infusions. Possible spells are:</p>
     <p>Pressure Spike</p>
@@ -96,8 +99,11 @@ const modTooltips = {
   </div>,
   Range: "Units are in centimeters.",
   CriticalModifier: "Note that this modifier is ignored on offhand weapons, except when performing basic attacks(?).",
-  Wand_SkillAbility_Parent: "Excluding Warfare, Scoundrel and Polymorph.",
-  Staff_SkillAbility_Parent: "Excluding Scoundrel.",
+  Melee_SkillAbility_Parent: "Except Huntsman.",
+  Bow_SkillAbility_Parent: "Except Warfare and Scoundrel.",
+  Wand_SkillAbility_Parent: "Excluding Warfare, Scoundrel, Huntsman and Polymorph.",
+  Staff_SkillAbility_Parent: "Excluding Scoundrel and Huntsman.",
+  Shield_SkillAbility_Parent: "Excluding Huntsman."
   // Belt_combatAbility_Parent: "These include One-handed, Two-handed, Ranged, Dual-wielding and Perseverance.",
   // Gloves_CombatAbility_Parent: "These include One-handed, Two-handed, Ranged, and Dual-wielding.",
   // Shield_CombatAbility_Parent: "These include One-handed, Perseverance, Leadership, and Retribution.",
@@ -116,6 +122,13 @@ for (let x in json) {
     mod.name = Object.keys(friendlyModNames).includes(mod.mod) ? friendlyModNames[mod.mod] : mod.mod;
     if (mod.handedness != "Any") {
       mod.name += (mod.handedness == "Two-handed only") ? " (2handed mod)" : " (1handed mod)"
+    }
+
+    if (mod.mod == "Range")
+      console.log(mod)
+    // oh my god pip this sucks
+    if (mod.mod == "Range" && mod.minValue == "225") {
+      mod.name += (" (Ranged weapons)")
     }
   }
 }
@@ -219,6 +232,7 @@ class App extends React.Component {
 
           <div style={{height: "30px"}}/>
 
+          <span className="info">Skill abilities refer to the stats that control your spells, like Pyromancy and Warfare.</span>
           <span className="info">Implicit modifiers (and other modifiers incompatible with the Greatforge) are not shown here; you can see some of them in the original sheet.</span>
           <span className="info">Note that while attributes roll from 1 to 4, this roll is not an absolute value but instead a "qualifier" which the game turns into a "level-appropriate amount of attribute". This way attribute boosts on items can go up to +6; see the table below:</span>
 
@@ -235,7 +249,7 @@ class App extends React.Component {
             <pre className="info-table">    21     |    1, 2, 3, 4       | +2, +4, +5, +6</pre>
           </div>
 
-          <span className="info">For more info on how modifiers are rolled, see <a href="https://www.pinewood.team/ee2gearmods/gear.txt">this text doc.</a></span>
+          <span className="info">For more info on how modifiers are rolled, see <a href="https://discord.com/channels/607369048929468456/608788140550914069/769335578697138246">this message.</a></span>
 
           <div style={{height: "30px"}}/>
         </header>

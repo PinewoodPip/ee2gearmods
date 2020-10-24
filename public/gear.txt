@@ -27,9 +27,9 @@ While this sample size is rather small, I think it's enough to confirm a few thi
 	The way modifiers roll seems to be:
 	1. Pick a modifier from the possible ones at this item level and item type (there is a weight system at play here, but I think most mods, if not all, are set to have the same weight)
 	2. Roll the value of the modifier, from the base (min) value, to the highest one possible at this item's level (dictated by LevelGrowStep). All values have the same chance to be picked at this stage.
-	3. Roll for a (DecayChance * 100)% chance to reduce the modifier's maximum value by 1 (starting from the highest one possible at this item level, not the absolute maximum for the modifier). Continue doing this until a roll fails. Almost all modifiers have a DecayChance of 0.55.
+	3. Roll for a (DecayChance * 100)% chance to reduce the modifier's maximum value by 1 (starting from the highest one possible at this item level, not the absolute maximum for the modifier). Continue doing this until a roll fails, with the chance being reduced by (DecayChance/AmountOfPossibleIncrements). Almost all modifiers have a DecayChance of 0.55.
 	
-	This means that 55% of items with 14% acc at this level will be downgraded *at least* to 13% acc. Then there is another 55% chance that it will be downgraded to 12%, and so on until a roll fails or the value reaches the base value.
+	This means that 55% of items with 14% acc at this level will be downgraded *at least* to 13% acc. Then there is another (TODO)% chance that it will be downgraded to 12%, and then a (TODO)% chance to get downgraded again and so on until a roll fails or the value reaches the base value.
 	
 	Since the DecayChance check always begins from the maximum value, the chance of lower increments of the modifier getting decayed is lower. Ex. If the game rolls 13% acc, there is a 30.25% (0.55^2) chance of it getting downgraded to 12% acc, NOT 55%, since the decay check starts from the highest possible roll.
 	
