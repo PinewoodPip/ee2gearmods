@@ -220,6 +220,8 @@ class App extends React.Component {
           <span className="info">This is a simplified version of <a href="https://docs.google.com/spreadsheets/d/1zaLjNqaNqTbzAknvp1BcvxQClNcT-mwGrkvPxNJVC8I/edit#gid=0">this sheet</a>, showing the possible modifiers for each gear type. You can use this to find out what modifiers each type of gear supports, for use with the Combine option in the Greatforge.</span>
           <span className="info">See <a href="https://discord.com/channels/607369048929468456/709524764162785390/747097769017344011">this message</a> on the Discord for a tutorial on modifying gear through the Greatforge.</span>
 
+          <span className="info">For more info on how modifiers are rolled, see <a href="https://discord.com/channels/607369048929468456/608788140550914069/769335578697138246">this message.</a></span>
+
           <div style={{height: "30px"}}/>
   
           <select value={this.state.dropdownOption} onChange={(e)=>{this.setState({dropdownOption: e.target.value})}}>
@@ -234,7 +236,7 @@ class App extends React.Component {
 
           <span className="info">Skill abilities refer to the stats that control your spells, like Pyromancy and Warfare.</span>
           <span className="info">Implicit modifiers (and other modifiers incompatible with the Greatforge) are not shown here; you can see some of them in the original sheet.</span>
-          <span className="info">Note that while attributes roll from 1 to 4, this roll is not an absolute value but instead a "qualifier" which the game turns into a "level-appropriate amount of attribute". This way attribute boosts on items can go up to +6; see the table below:</span>
+          <span className="info">Note that while attributes roll from 1 to 4, this roll is not an absolute value but instead a "qualifier" which the game turns into a "level-appropriate amount of attribute". This way attribute boosts on items can go up to +7 at level 21; see the table below:</span>
 
           <div>
             <pre className="info-table">Item Level | Possible Mod Values | Absolute Values (the real attribute boost)</pre>
@@ -246,10 +248,10 @@ class App extends React.Component {
             <pre className="info-table">    14     |      1, 2, 3        |   +2, +3, +4</pre>
             <pre className="info-table">    18     |    1, 2, 3, 4       | +2, +3, +5, +6</pre>
             <pre className="info-table">    20     |    1, 2, 3, 4       | +2, +3, +5, +6</pre>
-            <pre className="info-table">    21     |    1, 2, 3, 4       | +2, +4, +5, +6</pre>
+            <pre className="info-table">    21     |    1, 2, 3, 4       | +2, +4, +5, +7</pre>
           </div>
 
-          <span className="info">For more info on how modifiers are rolled, see <a href="https://discord.com/channels/607369048929468456/608788140550914069/769335578697138246">this message.</a></span>
+          <span className="info">Empowering an item will update its absolute attribute/vitality value, but this change will only be reflected after a reload.</span>
 
           <div style={{height: "30px"}}/>
         </header>
