@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/ee2gearmods/static/css/main.9d129910.css",
+    "main.js": "/ee2gearmods/static/js/main.086064b4.js",
+    "static/media/logo.svg": "/ee2gearmods/static/media/logo.2d27ead7c10f774c5306bcf3c257a728.svg",
+    "index.html": "/ee2gearmods/index.html",
+    "main.9d129910.css.map": "/ee2gearmods/static/css/main.9d129910.css.map",
+    "main.086064b4.js.map": "/ee2gearmods/static/js/main.086064b4.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9d129910.css",
+    "static/js/main.086064b4.js"
+  ]
+}
