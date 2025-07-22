@@ -58,7 +58,7 @@ const friendlyModNames = {
   Belt_Attribute: "Con, Mem, Wits",
   Breast_Attribute: "Str, Con, Mem",
   Helmet_Attribute: "Power, Mem, Wits",
-  Leggings_Attribute: "Fin, Con, Wits",
+  Leggings_Attribute: "Str, Fin, Con",
   Gloves_Attribute: "Fin, Pwr, Str",
   Boots_Attribute: "Fin, Pwr, Wit"
 }
